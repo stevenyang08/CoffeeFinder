@@ -31,7 +31,45 @@ class PokemonDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         nameLabel.text = pokemon.name.capitalized
+        let img = UIImage(named: "\(pokemon.pokedexId)")
+        pokemonImage.image = img
+        currentEvoImage.image = img
+        pokeIdLabel.text = "\(pokemon.pokedexId)"
+        
+        
+        pokemon.downloadPokemonDetails { 
+            // Only be called after network call is complete
+            self.updateUI()
+            
+        }
+    }
+    
+    func updateUI() {
+        pokemonDescription.text = pokemon.description
+        typeLabel.text = pokemon.type
+        heightLabel.text = pokemon.height
+        weightLabel.text = pokemon.weight
+        hpLabel.text = pokemon.hp
+        attackLabel.text = pokemon.attack
+        defenseLabel.text = pokemon.defense
+        speedLabel.text = pokemon.speed
+        spAttackLabel.text = pokemon.spAttack
+        spDefenseLabel.text = pokemon.spDefense
+        
+        if pokemon.nextEvolutionId == "" {
+            
+            evoLabel.text = "No Evolutions"
+            nextEvoImage.isHidden = true
+        } else {
+            
+            nextEvoImage.isHidden = false
+            nextEvoImage.image = UIImage(named: pokemon.nextEvolutionId)
+            let string = "\(pokemon.nextEvolutionName) - LVL \(pokemon.nextEvolutionLevel)"
+            evoLabel.text = string
+        }
+        
     }
     
     @IBAction func backButtonTapped(_ sender: UIButton) {
