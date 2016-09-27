@@ -227,7 +227,7 @@ class Pokemon {
                     
                     if let nextEvolution = evolution[0]["to"] as? String {
                         
-                        if nextEvolution.range(of: "mega") == nil {
+                        if nextEvolution.range(of: "mega") == nil || evolution[0]["level"] != nil {
                             
                             self._nextEvolutionName = nextEvolution
                             if let uri = evolution[0]["resource_uri"] as? String {
